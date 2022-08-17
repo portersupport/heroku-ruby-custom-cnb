@@ -100,6 +100,7 @@ WARNING
       post_bundler
       create_database_yml
       install_binaries
+      run_i18n_js_export_rake_task
       run_assets_precompile_rake_task
     end
     config_detect
@@ -163,6 +164,28 @@ WARNING
     cleanup
 
     super
+  end
+
+  def run_i18n_js_export_rake_task
+    log("i18n_js_export") do
+
+      puts "5 doritos despues"
+
+      i18n_export = rake.task("i18n:js:export")
+      return true if i18n_export.not_defined?
+
+      topic("Preparing app for Rails I18n export files")
+
+      i18n_export.invoke(env: rake_env)
+
+      if i18n_export.success?
+        log "i18n_js_export", :status => "success"
+        puts "I18n export files completed (#{"%.2f" % i18n_export.time}s)"
+
+      else
+        log "i18n_js_export", :status => "failure"
+      end
+    end
   end
 
   def cleanup
