@@ -169,8 +169,6 @@ WARNING
   def run_i18n_js_export_rake_task
     log("i18n_js_export") do
 
-      puts "5 doritos despues"
-
       i18n_export = rake.task("i18n:js:export")
       return true if i18n_export.not_defined?
 
