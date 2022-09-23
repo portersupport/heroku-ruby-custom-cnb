@@ -15,9 +15,6 @@ BUILDPACK_DIR=$CNB_BUILDPACK_DIR
 
 echo "begin"
 ls
-cd $BIN_DIR
-ls
-echo "..asdf.asdf"
 
 source "$BIN_DIR/support/bash_functions.sh"
 heroku_buildpack_ruby_install_ruby "$BIN_DIR" "$BUILDPACK_DIR"
