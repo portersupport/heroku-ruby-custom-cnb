@@ -16,8 +16,9 @@ BUILDPACK_DIR=$CNB_BUILDPACK_DIR
 echo "begin"
 
 cd $BUILDPACK_DIR
-ls
 source "./support/bash_functions.sh"
+cd ..
+ls
 heroku_buildpack_ruby_install_ruby "$BIN_DIR" "$BUILDPACK_DIR"
 
 if detect_needs_java "$RUBY_LAYER"; then
