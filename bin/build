@@ -2,18 +2,7 @@
 # The actual compilation code lives in `bin/support/ruby_compile`. This file instead
 # bootstraps the ruby needed and then executes `bin/support/ruby_compile`
 
-LAYERS_DIR="$1"
-
-PLATFORM_DIR=$2
-ENV_DIR="$PLATFORM_DIR/env"
-PLAN=$3
-APP_DIR=$(pwd)
-
-source "$BIN_DIR/support/bash_functions.sh"
-heroku_buildpack_ruby_install_ruby "$BIN_DIR" "$BUILDPACK_DIR"
-
-$heroku_buildpack_ruby_dir/bin/ruby $BIN_DIR/support/ruby_build $APP_DIR $LAYERS_DIR $PLATFORM_DIR $PLAN
-
+LAYERS_DIR="."
 
 RUBY_LAYER="${LAYERS_DIR}/ruby"
 mkdir -p $RUBY_LAYER
@@ -21,29 +10,19 @@ mkdir -p $RUBY_LAYER
 CACHE_DIR="${LAYERS_DIR}/cache"
 ENV_DIR="${LAYERS_DIR}/env"
 
-BIN_DIR=$(cd $(dirname $0); pwd)
-BUILDPACK_DIR=$(dirname $BIN_DIR)
-
-echo BIN_DIR=$BIN_DIR
-echo BUILDPACK_DIR=$BUILDPACK_DIR
-
-ls $LAYERS_DIR
+BIN_DIR="."
+BUILDPACK_DIR=$CNB_BUILDPACK_DIR
 
 source "$BIN_DIR/support/bash_functions.sh"
 heroku_buildpack_ruby_install_ruby "$BIN_DIR" "$BUILDPACK_DIR"
 
 if detect_needs_java "$RUBY_LAYER"; then
   cat <<EOM
-
        ## Warning: Your app needs java
-
        The Ruby buildpack determined your app needs java installed
        we recommend you add the jvm buildpack to your application:
-
          $ heroku buildpacks:add heroku/jvm --index=1
-
 -----> Installing Java
-
 EOM
 
   compile_buildpack_v2 "$RUBY_LAYER" "$CACHE_DIR" "$ENV_DIR" "https://buildpack-registry.s3.us-east-1.amazonaws.com/buildpacks/heroku/jvm.tgz" "heroku/jvm"
