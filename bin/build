@@ -10,7 +10,7 @@ mkdir -p $RUBY_LAYER
 CACHE_DIR="${LAYERS_DIR}/cache"
 ENV_DIR="${LAYERS_DIR}/env"
 
-BIN_DIR="."
+BIN_DIR=$CNB_BUILDPACK_DIR
 BUILDPACK_DIR=$CNB_BUILDPACK_DIR
 
 source "$BIN_DIR/support/bash_functions.sh"
