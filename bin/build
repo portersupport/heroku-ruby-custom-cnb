@@ -17,7 +17,7 @@ echo "begin"
 
 cd $BUILDPACK_DIR
 ls
-source "$./support/bash_functions.sh"
+source "./support/bash_functions.sh"
 heroku_buildpack_ruby_install_ruby "$BIN_DIR" "$BUILDPACK_DIR"
 
 if detect_needs_java "$RUBY_LAYER"; then
